@@ -1,0 +1,10 @@
+{
+  "name":"crud",
+  "version":"",
+  "description":"",
+  "main":"index.html",
+  "scripts": {
+    "dev": "serve -l 5000"
+  },
+  "author":"MarcoBardalesRodriguez"
+}

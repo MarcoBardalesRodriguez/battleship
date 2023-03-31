@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>WS client</title>
+    </head>
+
+    <body>
+        <input type="text" name="new-message" id="new-message">
+
+        <div id="response"></div>
+
+        <script>
+            const miWebSocket = new WebSocket("ws://localhost:8080");
+            const miNuevoMensaje = document.querySelector("#new-message");
+            const misRespuesta = document.querySelector("#response");
+
+            function open() {
+                console.log("WebSocket abierto.");
+            }
+
+            async function message(evento) {
+                console.log("ws recibio un mensaje");
+                const mensajeRecivido = await evento.data;
+                // misRespuesta.innerHTML = misRespuesta.innerHTML.concat(mensajeRecivido, "<br>");
+                misRespuesta.innerHTML = mensajeRecivido;
+            }
+
+            function error() {
+                console.error("ws ah observado un error: ", evento);
+            }
+
+            function close() {
+                console.log("ws Cerrado");
+            }
+
+            function enviarNuevoMensaje(evento) {
+                if (evento.code == "Enter") {
+                    miWebSocket.send(miNuevoMensaje.value);
+                    miNuevoMensaje.value = "";
+                }
+            }
+
+            miWebSocket.addEventListener("open", open);
+            miWebSocket.addEventListener("message", message);
+            miWebSocket.addEventListener("error", error);
+            miWebSocket.addEventListener("close", close);
+
+            miNuevoMensaje.addEventListener("keypress", enviarNuevoMensaje);
+        </script>
+    </body>
+
+</html>

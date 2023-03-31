@@ -1,0 +1,21 @@
+/* TABLE STYLES */
+
+#tablero table, #tablero th, #tablero td{
+    border: 1px solid white;
+    background-color: black;
+    color: white;
+    border-collapse: collapse;
+}
+
+#tablero th{
+    min-width: 20px;
+}
+
+#tablero td{
+    min-width: 20px;
+    text-align: center;
+}
+
+#tablero td.player{
+    background-color: green;
+}
