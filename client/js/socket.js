@@ -86,27 +86,27 @@ ws.addEventListener('open', () => {
 });
 
 ws.addEventListener('message', (event) => {
-    // const data = event.data;
-    // console.log(data);
-    event.data.text().then((text) => {
-        const data = JSON.parse(text);
+    const data = JSON.parse(event.data);
+    console.log(data);
 
-        switch (data.type) {
-            case 'join':
-                const client = new Client(data.name, data.color, data.position, ws);
-                client.draw();
-                break;
-            case 'move':
-                const clients = document.querySelectorAll(`[data-name="${data.name}"]`);
-                console.log(clients);
-                console.log(data);
-                clients.forEach((client) => {
-                    client.style.gridColumn = data.position.x + 1;
-                    client.style.gridRow = data.position.y + 1;
-                });
-                break;
-            default:
-                break;
-        }
-    });
+    switch (data.type) {
+        case 'message':
+            console.log(`Received message: ${data.message}`);
+            break;
+        case 'join':
+            const client = new Client(data.name, data.color, data.position, ws);
+            client.draw();
+            break;
+        case 'move':
+            const clients = document.querySelectorAll(`[data-name="${data.name}"]`);
+            console.log(clients);
+            console.log(data);
+            clients.forEach((client) => {
+                client.style.gridColumn = data.position.x + 1;
+                client.style.gridRow = data.position.y + 1;
+            });
+            break;
+        default:
+            break;
+    }
 });
